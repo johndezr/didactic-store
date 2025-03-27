@@ -8,20 +8,49 @@ export const useAuthStore = defineStore('auth', () => {
   const token = ref('')
   const status = ref<AuthStatus>(AuthStatus.UNAUTHENTICATED)
 
-  const setAuthInfo = (newUser: User | null, newToken: string, authStatus: AuthStatus) => {
+  const userFullName = computed(() => user.value?.fullName)
+  const isUserAdmin = computed(() => user.value?.roles.includes('admin'))
+  const isUserAuthenticated = computed(() => status.value === AuthStatus.AUTHENTICATED)
+
+  const setUser = (newUser: User | null) => {
     user.value = newUser
+  }
+  const setToken = (newToken: string) => {
     token.value = newToken
+    localStorage.setItem('token', newToken)
+  }
+  const setStatus = (authStatus: AuthStatus) => {
     status.value = authStatus
   }
-
-  const getUserFullName = computed(() => user.value?.fullName)
-  const isUserAdmin = computed(() => user.value?.roles.includes('admin'))
+  const handleRememberMe = (rememberMe: boolean, email: string) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    rememberMe ? localStorage.setItem('email', email) : localStorage.removeItem('email')
+  }
+  const setAuthInfo = ({
+    user,
+    token,
+    status,
+  }: {
+    user: User | null
+    token: string
+    status: AuthStatus
+  }) => {
+    setUser(user)
+    setToken(token)
+    setStatus(status)
+  }
 
   return {
     user,
+    status,
     token,
-    setAuthInfo,
-    getUserFullName,
+    userFullName,
     isUserAdmin,
+    isUserAuthenticated,
+    setAuthInfo,
+    setUser,
+    setToken,
+    setStatus,
+    handleRememberMe,
   }
 })

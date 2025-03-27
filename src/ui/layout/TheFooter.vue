@@ -1,9 +1,7 @@
 <template>
   <footer class="bg-white antialiased dark:bg-gray-800">
-    <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
-      <div class="border-b border-gray-100 py-6 dark:border-gray-700 md:py-8 lg:py-8"></div>
-
-      <div class="py-6 md:py-8">
+    <div class="mx-auto max-w-screen-xl px-2 2xl:px-0">
+      <div class="pt-6 md:pt-8">
         <div class="gap-4 space-y-5 xl:flex xl:items-center xl:justify-between xl:space-y-0">
           <a href="#" title="" class="block">
             <img

@@ -28,15 +28,17 @@ const handleJSONResponse = <T>(response: JSONResponse): Promise<T> => {
     })
 }
 
-const enhancedFetch = (path: string, body?: object) => {
+const enhancedFetch = (
+  path: string,
+  { body, token, method = 'GET' }: { body?: BodyInit; token?: string; method?: string },
+) => {
   const headers = {
     ['Accept']: 'application/json',
     ['Content-Type']: 'application/json',
+    ['Authorization']: token ? `Bearer ${token}` : '',
   }
 
-  const method = body ? { method: 'POST', body: JSON.stringify(body) } : { method: 'GET' }
-
-  return fetch(`${BASE_URL}/${path}`, { headers, ...method }).then(handleJSONResponse)
+  return fetch(`${BASE_URL}/${path}`, { headers, method, body }).then(handleJSONResponse)
 }
 
 export default enhancedFetch

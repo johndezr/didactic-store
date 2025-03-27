@@ -13,5 +13,9 @@
   ],
   "compilerOptions": {
     "module": "NodeNext"
+  },
+  "rules": {
+    "no-unused-expressions": "off",
+    "@typescript-eslint/no-unused-expressions": "error"
   }
 }

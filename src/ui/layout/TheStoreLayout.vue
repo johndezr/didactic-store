@@ -1,6 +1,8 @@
 <template>
   <TheNavbar />
-  <RouterView />
+  <main class="md:py-16 py-8">
+    <RouterView />
+  </main>
   <TheFooter />
 </template>
 

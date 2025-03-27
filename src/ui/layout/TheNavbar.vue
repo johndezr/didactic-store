@@ -1,10 +1,12 @@
 <template>
-  <nav class="bg-white dark:bg-gray-800 antialiased">
+  <nav
+    class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600"
+  >
     <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0 py-4">
       <div class="flex items-center justify-between">
         <div class="flex items-center space-x-8">
           <div class="shrink-0">
-            <a href="#" title="" class="">
+            <RouterLink to="/">
               <img
                 class="block w-auto h-8 dark:hidden"
                 src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/logo-full.svg"
@@ -15,7 +17,7 @@
                 src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/logo-full-dark.svg"
                 alt=""
               />
-            </a>
+            </RouterLink>
           </div>
 
           <ul
@@ -70,8 +72,28 @@
         </div>
 
         <div class="flex items-center lg:space-x-2">
+          <template v-if="store.isUserAuthenticated">
+            <RouterLink
+              v-if="store.isUserAdmin"
+              as="button"
+              to="/admin"
+              type="button"
+              data-test="admin-button-link"
+              class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+              >Admin panel</RouterLink
+            >
+            <button
+              type="button"
+              @click="logout"
+              data-test="logout-button"
+              class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
+            >
+              Logout
+            </button>
+          </template>
           <RouterLink
-            to="/login"
+            v-else
+            to="/auth/login"
             type="button"
             class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
           >
@@ -207,6 +229,12 @@
   </nav>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useAuthStore } from '@/stores/auth'
+import useAuth from '@/composables/useAuth'
+
+const store = useAuthStore()
+const { logout } = useAuth()
+</script>
 
 <style scoped></style>

@@ -34,6 +34,7 @@
                 >Password</label
               >
               <input
+                ref="passwordInputRef"
                 v-model="formData.password"
                 type="password"
                 name="password"
@@ -47,6 +48,8 @@
               <div class="flex items-start">
                 <div class="flex items-center h-5">
                   <input
+                    v-model="formData.rememberMe"
+                    name="remember"
                     id="remember"
                     aria-describedby="remember"
                     type="checkbox"
@@ -57,11 +60,6 @@
                   <label for="remember" class="text-gray-500 dark:text-gray-300">Remember me</label>
                 </div>
               </div>
-              <a
-                href="#"
-                class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
-                >Forgot password?</a
-              >
             </div>
             <button
               type="submit"
@@ -71,9 +69,12 @@
             </button>
             <p class="text-sm font-light text-gray-500 dark:text-gray-400">
               Don’t have an account yet?
-              <a href="#" class="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                >Sign up</a
+              <router-link
+                to="/auth/signup"
+                class="font-medium text-primary-600 hover:underline dark:text-primary-500"
               >
+                Sign up
+              </router-link>
             </p>
           </form>
         </div>
@@ -83,13 +84,22 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmits, reactive } from 'vue'
+import { defineEmits, reactive, defineProps, ref, onMounted } from 'vue'
 
 defineEmits(['onLogin'])
+const { localStorageSavedInfo } = defineProps(['localStorageSavedInfo'])
 
+const passwordInputRef = ref(null)
 const formData = reactive({
-  email: '',
+  email: localStorageSavedInfo.email || '',
   password: '',
+  rememberMe: localStorageSavedInfo.email ? true : false,
+})
+
+onMounted(() => {
+  if (formData.email !== '') {
+    passwordInputRef.value.focus()
+  }
 })
 </script>
 
