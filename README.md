@@ -1,6 +1,6 @@
 # volare-store
 
-This template should help get you started developing with Vue 3 in Vite.
+This was an experimental and educational project with Vue 3 - TanstackQuery and Vitest.
 
 ## Recommended IDE Setup
 
